@@ -1,81 +1,77 @@
 const http = new EasyHTTP()
 
-document.getElementById('button1').addEventListener('click', getPosts)
-function getPosts() {
+document.getElementById('button1').addEventListener('click', getJokes)
+function getJokes(e) {
+  const number = document.getElementById('number').value.toString() || '1'
   http
-    .get('https://jsonplaceholder.typicode.com/posts')
+    .get(`https://api.icndb.com/jokes/random/${number}`)
     .then((response) => {
-      // console.log(response)
       let output = '<ol>'
-      // const parsedData = JSON.parse(data)
-      response.forEach((post) => {
-        output += `<li>${post.title}</li>`
+      response.value.forEach((element) => {
+        output += `<li>${element.joke}</li>`
       })
       output += '</ol>'
-      document.getElementById('output').innerHTML = output
+      document.getElementById('output1').innerHTML = output
     })
     .catch((err) => console.log(err))
+  e.preventDefault()
 }
 
-// document.getElementById('button1').addEventListener('click', getText)
+document.getElementById('button2').addEventListener('click', postUser)
 
-// // fetch
-// function getText() {
-//   http.get('text.txt').then(function (res) {
-//     return res.text()
-//   }).then(data => {
-//     document.getElementById('output').innerHTML = data
-//   }).catch((err)=> {
-//     console.log(err)
-//   })
-// }
+function postUser(e) {
+  const data = {
+    id: document.getElementById('id').value,
+    name: document.getElementById('name').value,
+    username: document.getElementById('username').value,
+    email: document.getElementById('email').value,
+  }
+  http
+    .post('https://jsonplaceholder.typicode.com/users', data)
+    .then((result) => {
+      let output = '<strong>Posted User</strong><ol>'
+      for (const [key, value] of Object.entries(result)) {
+        output += `<li>${key}: ${value}</li>`
+      }
+      output += '</ol>'
+      document.getElementById('output2').innerHTML = output
+    })
+    .catch((err) => console.log)
+  e.preventDefault()
+}
 
-// document.getElementById('button2').addEventListener('click', getJson)
+document.getElementById('button3').addEventListener('click', updateUser)
 
-// function getJson() {
-//   fetch('posts.json').then(function (res) {
-//     return res.json()
-//   }).then(data => {
-//     let output = '<ol>'
-//     // const parsedData = JSON.parse(data)
-//     data.forEach(post => {
-//       output += `<li>${post.title}</li>`
-//     });
-//     output += '</ol>'
-//     document.getElementById('output').innerHTML = output
-//   }).catch((err)=> {
-//     console.log(err)
-//   })
-// }
+function updateUser(e) {
+  const data = {
+    id: document.getElementById('id').value,
+    name: document.getElementById('name').value,
+    username: document.getElementById('username').value,
+    email: document.getElementById('email').value,
+  }
 
-// document.getElementById('button3').addEventListener('click', getExternal)
+  http
+    .put(`https://jsonplaceholder.typicode.com/users/${data.id}`, data)
+    .then((result) => {
+      let output = '<strong>Updated User</strong><ol>'
+      for (const [key, value] of Object.entries(result)) {
+        output += `<li>${key}: ${value}</li>`
+      }
+      output += '</ol>'
+      document.getElementById('output3').innerHTML = output
+    })
+    .catch((err) => console.log)
+  e.preventDefault()
+}
 
-// function handleErrors(res) {
-//   // console.log(res)
-//   if (!res.ok) {
-//     throw new Error(res.error);
-//   }
-//   return res;
-// }
+document.getElementById('button4').addEventListener('click', deleteUser)
 
-// function getExternal() {
-//   fetch('https://api.github.com/users')
-//   .then((res) => {
-//     return res.json()
-//   })
-//   // .then((res) => {
-//   //   console.log(res)
-//   //   return res})
-//   .then(data => {
-//     let output = '<ol>'
-//     data.forEach(user => {
-//       output += `<li><div>${user.login} <br><img src="${user.avatar_url}" width=100></div></li>`
-//     });
-
-//     output += '</ol>'
-//     document.getElementById('output').innerHTML = output
-//   }).catch((err)=> {
-//     document.getElementById('output').innerHTML = `<span class="error">${err}</span>`
-//     console.log(err)
-//   })
-// }
+function deleteUser(e) {
+  const id = document.getElementById('deleteId').value;
+  const output = document.getElementById('output4');
+  http
+  .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+  .then(result => output.innerText = result)
+  .catch(err => console.log(err))
+  e.preventDefault()
+}
