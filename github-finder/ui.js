@@ -30,6 +30,7 @@ class UI {
     `
   }
   showRepos(repos) {
+    console.log('repos',repos)
     let output = ''
     repos.forEach(repo => {
       output += `

@@ -12,23 +12,23 @@ class Github {
     // const baseUrl = `https://api.github.com/users/`
     
     const profileResponse = await fetch(
-    `https://api.github.com/users/${userName}` 
+    `https://api.github.com/users/${userName}?client_id=${this.client_id}&client_secret=${this.client_secret}` 
     , {
       headers: {
         'User-Agent': 'mygithubsearch',
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': `token ${this.token}` 
+        // 'Authorization': `token ${this.token}` 
       }
     })
     const profile = await profileResponse.json()
 
     const reposResponse = await fetch(
-    `https://api.github.com/users/${userName}/repos?per_page=${this.repos_count}&${this.repos_sort}`
+    `https://api.github.com/users/${userName}/repos?per_page=${this.repos_count}&${this.repos_sort}&client_id=${this.client_id}&client_secret=${this.client_secret}`
     , {
       headers: {
         'User-Agent': 'mygithubsearch',
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': `token ${this.token}` 
+        // 'Authorization': `token ${this.token}` 
       }
     })
     const repos = await reposResponse.json()
