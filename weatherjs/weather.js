@@ -23,7 +23,6 @@ class Weather {
         coord: data.coord,
         id: data.sys.id
       }
-      console.log(weatherData)
       return weatherData
   }
   changeLocation(city) {
