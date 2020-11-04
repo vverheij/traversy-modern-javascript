@@ -6,31 +6,35 @@ class Weather {
     this.country = country
   }
   async getWeather() {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city},${this.state},${this.country}&appid=${this.apiKey}&units=metric&lang=nl`
+
+    url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city},${this.state},${this.country}&appid=${this.apiKey}&units=metric&lang=nl`
+    
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?
-      q=${this.city},${this.state},${this.country}&appid=${this.apiKey}&units=metric&lang=nl`, 
+      url,
+
       {
         headers: {
-          'Accept': 'application/json',
-        }
-      })
-      const data = await response.json()
-      const weatherData = {
-        ...data.main,
-        city: data.name,
-        country: data.sys.country,
-        desc: data.weather[0].description,
-        icon: data.weather[0].icon,
-        wind: data.wind,
-        coord: data.coord,
-        id: data.sys.id
+          Accept: 'application/json',
+        },
       }
-      return weatherData
+    )
+    const data = await response.json()
+    const weatherData = {
+      ...data.main,
+      city: data.name,
+      country: data.sys.country,
+      desc: data.weather[0].description,
+      icon: data.weather[0].icon,
+      wind: data.wind,
+      coord: data.coord,
+      id: data.sys.id,
+    }
+    return weatherData
   }
   changeLocation(city, state, country) {
     this.city = city
     this.state = state
     this.country = country
-
   }
 }
