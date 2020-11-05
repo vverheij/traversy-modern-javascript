@@ -3,12 +3,8 @@ class Storage {
     this.shows = []
   }
   getShows() {
-    // this.shows = (localStorage.getItem('shows') === null) ? this.shows : JSON.parse(localStorage.getItem('shows')) 
-    if (localStorage.getItem('shows') === null) {
-      return this.shows
-    } else {
-      return JSON.parse(localStorage.getItem('shows'));
-    }
+    this.shows = (localStorage.getItem('shows') === null) ? this.shows : JSON.parse(localStorage.getItem('shows')) 
+    return this.shows;
   }
   setShows(shows) {
     localStorage.setItem('shows', shows)
@@ -39,7 +35,7 @@ class Storage {
     } else {
       shows = JSON.parse(localStorage.getItem('shows'))
     }
-    shows.unshift(show)
+    shows.push(show)
     localStorage.setItem('shows', JSON.stringify(shows))
   }
 }

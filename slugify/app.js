@@ -1,15 +1,13 @@
+const slugifier = new Slugifier('https://filmfestival.nl/show/')
+const ui = new UI()
+const storage = new Storage()
+
 const form = document.querySelector('#show-form')
 const showList = document.querySelector('.collection')
 const clearBtn = document.querySelector(".clear-shows");
 const filter = document.querySelector("#filter");
 const showInput = document.querySelector('#show')
 
-
-const slugifier = new Slugifier('https://filmfestival.nl/show/')
-const ui = new UI()
-const storage = new Storage()
-
-// load all eventlisteners
 loadEventListeners()
 
 function loadEventListeners() {
@@ -35,8 +33,6 @@ function addShow(e) {
 function removeShow(e) {
   ui.removeShow(e)
   if (e.target.parentElement.classList.contains('delete-item')) {
-    // e.target.parentElement.parentElement.remove()
-    // // remove form local storage
     storage.removeShowFromLocalStorage(e.target.parentElement.parentElement)
   }
 }
@@ -48,20 +44,7 @@ function clearShows(e) {
 
 function filterShows(e) {
   ui.filterShows(e)
-  // const text = e.target.value.toLowerCase()
-  // document.querySelectorAll('.collection-item').forEach(function (item) {
-  //   const content = item.firstChild.textContent
-  //   if (content.toLowerCase().indexOf(text) != -1) {
-  //     item.style.display = 'block'
-  //   } else {
-  //     item.style.display = 'none'
-  //   }
-  // })
 }
-
-// function storeShowInLocalStorage(show) {
-//   storage.storeShowInLocalStorage(show)
-// }
 
 function getShows(e) {
   let shows = storage.getShows()

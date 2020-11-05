@@ -11,14 +11,14 @@ class UI {
     // const modal = document.querySelectorAll('.modal');
   }
   addShowsToList(shows) {
-    shows.forEach((show) => { 
+    shows.slice().reverse().forEach((show) => { 
       const li = this.createShowListItem(show)
       this.showList.appendChild(li);
-  })
+    })
   }
   addShow(show){
     const li = this.createShowListItem(show)
-    this.showList.appendChild(li);
+    this.showList.insertBefore(li, this.showList.childNodes[0]);
     this.showInput.value = "";
   }
   clearShows(){
